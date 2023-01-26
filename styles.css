@@ -21,12 +21,16 @@ li {
   color: #7c7c7c;
   font-size: 16px;
   font-weight: 100;
-  text-transform: capitalize;
+
   height: 19px;
   line-height: 1;
   list-style: none;
 }
 
+
+li::first-letter{
+  text-transform: capitalize;
+}
 .weather-app {
   border: 1px solid #dadde1;
   padding: 15px;
