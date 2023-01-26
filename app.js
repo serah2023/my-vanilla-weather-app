@@ -1,5 +1,4 @@
 
-
 function formatDate(timestamp) {
   let date = new Date(timestamp);
   let hours = date.getHours();
@@ -28,8 +27,14 @@ function displayTemperature(response) {
   let cityElement = document.querySelector("#city");
   let descriptionElement = document.querySelector("#description");
   let humidityElement = document.querySelector("#humidity");
-    let windElement = document.querySelector("#wind");
+ let windElement = document.querySelector("#wind");
   let dateElement = document.querySelector("#date");
+  let iconElement=document.querySelector("#icon");
+  iconElement.setAttribute(
+    "src",
+    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
+  );
+
 
   humidityElement.innerHTML = response.data.temperature.humidity;
   dateElement.innerHTML = formatDate(response.data.time * 1000);
@@ -42,7 +47,7 @@ function displayTemperature(response) {
 
 
 let apiKey = "5cf053ofb32b9t3e1a2bc6055da407d4";
-let city = "paris";
+let city = "italy";
 let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=5cf053ofb32b9t3e1a2bc6055da407d4&units=metric`;
 
 console.log(apiUrl);
