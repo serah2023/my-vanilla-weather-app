@@ -1,4 +1,3 @@
-
 function formatDate(timestamp) {
   let date = new Date(timestamp);
   let hours = date.getHours();
@@ -27,14 +26,16 @@ function displayTemperature(response) {
   let cityElement = document.querySelector("#city");
   let descriptionElement = document.querySelector("#description");
   let humidityElement = document.querySelector("#humidity");
- let windElement = document.querySelector("#wind");
+  let windElement = document.querySelector("#wind");
   let dateElement = document.querySelector("#date");
-  let iconElement=document.querySelector("#icon");
+  let iconElement = document.querySelector("#icon");
+
+  CelsiusTemperature = response.data.temperature.current;
+
   iconElement.setAttribute(
     "src",
     `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
   );
-
 
   humidityElement.innerHTML = response.data.temperature.humidity;
   dateElement.innerHTML = formatDate(response.data.time * 1000);
@@ -42,35 +43,58 @@ function displayTemperature(response) {
   descriptionElement.innerHTML = response.data.condition.description;
   cityElement.innerHTML = response.data.city;
   temperatureElement.innerHTML = Math.round(response.data.temperature.current);
+
+}
+
+function search(city) {
+  let apiKey = "5cf053ofb32b9t3e1a2bc6055da407d4";
+  // let city = "italy";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=5cf053ofb32b9t3e1a2bc6055da407d4&units=metric`;
+  axios.get(apiUrl).then(displayTemperature);
+}
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  // console.log(cityInputElement.value)
+  search(cityInputElement.value);
 }
 
 
 
-function search (city)
-{
-let apiKey = "5cf053ofb32b9t3e1a2bc6055da407d4";
-// let city = "italy";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=5cf053ofb32b9t3e1a2bc6055da407d4&units=metric`;
-axios.get(apiUrl).then(displayTemperature);
+function displayFahrenheitTemperature(event) {
+  event.preventDefault();
 
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+
+  let FahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(FahrenheitTemperature);
 }
 
 
+function displayCelsiusTemperature(event) {
+  event.preventDefault();
 
-function handleSubmit(event)
-{
-    event.preventDefault();
-    let cityInputElement=document.querySelector("#city-input");
-    // console.log(cityInputElement.value)
-    search(cityInputElement.value)
+
+celsiusLink.classList.add("active");
+fahrenheitLink.classList.remove("active");
+
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
 
 
+let celsiusTemperature=null;
 
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
 
+let fahrenheitLink = document.querySelector("#Fahrenheit-link");
+fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("lisbon");
-
-let form=document.querySelector("#search-form");
-form.addEventListener("click" , handleSubmit)
