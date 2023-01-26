@@ -1,14 +1,4 @@
 
-let apiKey = "5cf053ofb32b9t3e1a2bc6055da407d4";
-
-let city = "paris";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=5cf053ofb32b9t3e1a2bc6055da407d4&units=metric`;
-
-console.log(apiUrl);
-
-axios.get(apiUrl).then(displayTemperature);
-
-
 
 function formatDate(timestamp) {
   let date = new Date(timestamp);
@@ -49,3 +39,12 @@ function displayTemperature(response) {
   temperatureElement.innerHTML = Math.round(response.data.temperature.current);
 }
 
+
+
+let apiKey = "5cf053ofb32b9t3e1a2bc6055da407d4";
+let city = "paris";
+let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=5cf053ofb32b9t3e1a2bc6055da407d4&units=metric`;
+
+console.log(apiUrl);
+
+axios.get(apiUrl).then(displayTemperature);
