@@ -46,10 +46,31 @@ function displayTemperature(response) {
 
 
 
+function search (city)
+{
 let apiKey = "5cf053ofb32b9t3e1a2bc6055da407d4";
-let city = "italy";
+// let city = "italy";
 let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=5cf053ofb32b9t3e1a2bc6055da407d4&units=metric`;
-
-console.log(apiUrl);
-
 axios.get(apiUrl).then(displayTemperature);
+
+}
+
+
+
+function handleSubmit(event)
+{
+    event.preventDefault();
+    let cityInputElement=document.querySelector("#city-input");
+    // console.log(cityInputElement.value)
+    search(cityInputElement.value)
+}
+
+
+
+
+
+
+search("lisbon");
+
+let form=document.querySelector("#search-form");
+form.addEventListener("click" , handleSubmit)
