@@ -30,21 +30,22 @@ function displayTemperature(response) {
   let dateElement = document.querySelector("#date");
   let iconElement = document.querySelector("#icon");
 
-  CelsiusTemperature = response.data.temperature.current;
+  celsiusTemperature = response.data.temperature.current;
 
-  iconElement.setAttribute(
-    "src",
-    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
-  );
-
+ 
   humidityElement.innerHTML = response.data.temperature.humidity;
   dateElement.innerHTML = formatDate(response.data.time * 1000);
   windElement.innerHTML = Math.round(response.data.wind.speed);
   descriptionElement.innerHTML = response.data.condition.description;
   cityElement.innerHTML = response.data.city;
-  temperatureElement.innerHTML = Math.round(response.data.temperature.current);
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
+ iconElement.setAttribute(
+   "src",
+   `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`
+ );
 
 }
+
 
 function search(city) {
   let apiKey = "5cf053ofb32b9t3e1a2bc6055da407d4";
@@ -65,11 +66,13 @@ function handleSubmit(event) {
 function displayFahrenheitTemperature(event) {
   event.preventDefault();
 
+    let temperatureElement = document.querySelector("#temperature");
+
+
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
 
   let FahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
-  let temperatureElement = document.querySelector("#temperature");
   temperatureElement.innerHTML = Math.round(FahrenheitTemperature);
 }
 
